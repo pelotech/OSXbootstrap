@@ -9,8 +9,8 @@ brew cleanup --force
 rm -f -r /Library/Caches/Homebrew/*
 
 echo ""
-echo "\033[1m\033[32mPeloton Brew is complete. Happy Coding. \033[39m"
-echo "\033[0m-------------------------------------------------------------------------"
+echo "Package installation complete. Happy Coding."
+echo "-------------------------------------------------------------------------"
 echo ""
 echo "bash and zshell completons are installed, your current shell is" $SHELL
 echo ""

@@ -4,6 +4,8 @@
 # Dock and Dashboard                                                          #
 ###############################################################################
 
+#disable the annoying animated icon bounce
+defaults write com.apple.dock no-bouncing -bool TRUE
 
 # Set the icon size of Dock items to 36 pixels to reduce it's space usage
 defaults write com.apple.dock tilesize -int 36

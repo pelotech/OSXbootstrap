@@ -4,6 +4,8 @@
 # Docker                                                                      #
 ###############################################################################
 
+killall Docker
+
 #docker for mac does not have a homebrew cask yet
 curl -o Docker.dmg https://download.docker.com/mac/stable/Docker.dmg
 hdiutil mount Docker.dmg

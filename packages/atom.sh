@@ -4,6 +4,7 @@
 # Atom                     #
 ###############################################################################
 
+killall Atom
 
 #Atom and it's packages
 brew cask install atom            #code editor
