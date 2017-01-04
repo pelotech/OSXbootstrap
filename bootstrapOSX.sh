@@ -29,6 +29,7 @@ function doIt() {
 
     for file in ~/{preferences,extras}/*; do
   		echo $file
+			source $file
     done;
     unset file;
 
