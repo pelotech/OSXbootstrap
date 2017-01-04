@@ -16,7 +16,7 @@ forgo those settings.
 You can clone the repository wherever you want. The bootstrapper script will pull in the latest version and execute them.
 
 ```bash
-git clone https://github.com/jb-brown/bootstrapOSX.git && cd bootstrapOSX && source bootstrapOSX.sh
+git clone https://github.com/PelotonTechIO/bootstrapOSX.git && cd bootstrapOSX && source bootstrapOSX.sh
 ```
 
 To update, `cd` into your local `bootstrapOSX` repository and then:
@@ -36,7 +36,7 @@ set -- -f; source bootstrapOSX.sh
 To install these files without Git:
 
 ```bash
-cd; curl -#L https://github.com/jb-brown/bootstrapOSX/tarball/master | tar -xzv --strip-components 1 --exclude={README.md,bootstrapOSX.sh,LICENSE-MIT.txt}
+cd; curl -#L https://github.com/PelotonTechIO/bootstrapOSX/tarball/master | tar -xzv --strip-components 1 --exclude={README.md,bootstrapOSX.sh,LICENSE-MIT.txt}
 ```
 
 To update later on, just run that command again.
@@ -53,7 +53,7 @@ You could also use `~/.extra` to override settings from the repository.
 ## Feedback
 
 Suggestions/improvements
-[welcome](https://github.com/jb-brown/bootstrapOSX/issues)!
+[welcome](https://github.com/PelotonTechIO/bootstrapOSX/issues)!
 
 
 ## Thanks to…
