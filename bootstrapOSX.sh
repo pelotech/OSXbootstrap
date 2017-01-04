@@ -27,7 +27,7 @@ function doIt() {
 		sudo pmset -a standbydelay 86400
 
 
-    for file in ~/{preferences,extras}/*; do
+    for file in ~/{packages,preferences,extras}/*; do
   		echo $file
 			source $file
     done;
