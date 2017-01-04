@@ -3,9 +3,9 @@
 
 This project is inspired and seeded by the code at https://github.com/mathiasbynens/dotfiles. It has been stripped
 down and re-arranged to focus on team software development instead of hacking. Accordingly themes have been relegated
-to being an 'extras' addition (see more below) and the project has been re-arranged by splitting up preferences
-into smaller file chunks so that individual team members can more easily identify the changes they want to make,
-and/or delete whole files to forgo those settings.
+to being an 'extras' addition (see more below). And, the project has been re-arranged into  smaller file chunks
+to allow individual team members to quickly identify the changes they want to make, or delete whole files to
+forgo those settings.
 
 ## Installation
 
@@ -55,11 +55,6 @@ You could also use `~/.extra` to override settings from the repository.
 Suggestions/improvements
 [welcome](https://github.com/jb-brown/bootstrapOSX/issues)!
 
-## Author
-
-| [![twitter/jbbrown](http://gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70)](http://twitter.com/mathias "Follow @mathias on Twitter") |
-|---|
-| Thanks! |
 
 ## Thanks to…
 * Mathias Bynens and everyone he thanks on his great work at https://github.com/mathiasbynens/dotfiles
