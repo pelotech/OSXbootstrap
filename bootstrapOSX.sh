@@ -15,7 +15,8 @@ function boot_repo(){
 }
 
 function sourceFiles(){
-	for file in "${1}/${2}/*.sh"; do
+	echo "${1}/${2}/*.sh"
+	for file in "${1}/${2}"/*.sh; do
 		echo "Sourcing ${file}"
 		source $file
 	done;
@@ -142,3 +143,7 @@ else
 		doIt $DIR $pkgs $prefs $extras;
 fi;
 unset doIt;
+unset prefs;
+unset pkgs;
+unset extras;
+unset force;
