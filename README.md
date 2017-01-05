@@ -1,5 +1,5 @@
 
-# Bootstrap OSX to be faster and more convenient for software development
+# Faster, better OSX for Team Software Development
 
 This project is inspired and seeded by the code at https://github.com/mathiasbynens/dotfiles. It has been stripped
 down and re-arranged to focus on team software development instead of hacking. Accordingly themes have been relegated
@@ -62,10 +62,7 @@ cd; curl -#L https://github.com/PelotonTechIO/bootstrapOSX/tarball/master | tar 
 To update later on, just run that command again.
 
 
-### Command Line Options
-
-
-### Add custom commands without creating a new fork
+## Add custom commands without creating a new fork
 
 To extend this code base with your personal preferences without the maintenance that might come with forking, setup a github repo (or multiple) containg your shell scripts, and simply pass the name of those repos to bootstrapOSX.sh as the value of the --extras argument. 
 
@@ -79,7 +76,7 @@ source bootstraposx.sh --extras "jb-brown/dotfiles,PelotontechIO/CustomerBootstr
 
 
 1. Run the setup from this repo via bootstraposx.sh
-2. Then clone http://github.com/jb-brown/dotfiles and apply my dotfiles, which I can share publicly, but not everyone on my team wants to use.
+2. Then clone <http://github.com/jb-brown/dotfiles> and apply my dotfiles, which I can share publicly, but not everyone on my team wants to use.
 3. Followed by some cloning a private repo our tam uses to support the current Peloton customers.
 4. And finally use my own private repo that is a setup for my preferred theme, and the filesystem of my personal files like music, pictures, and books.
 
