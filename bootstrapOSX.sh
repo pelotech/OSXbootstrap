@@ -84,8 +84,8 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #fi
 
 #if we were in a symlink navigate to the resoling location
-cd "${DIR}"
-git pull origin master;
+#cd "${DIR}"
+#git pull origin master;
 
 # get flags from the command line
 force=false
