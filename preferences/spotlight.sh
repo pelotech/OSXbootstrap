@@ -20,16 +20,19 @@ sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Vol
 # 	MENU_OTHER
 
 defaults write com.apple.spotlight CalculationEnabled -bool YES
+#NOTE - MENU_EXPRESSION = calculator function within spotlight
+
 
 defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 1;"name" = "APPLICATIONS";}' \
  	'{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
 	'{"enabled" = 1;"name" = "DIRECTORIES";}' \
+	'{"enabled" = 1;"name" = "MESSAGES";}' \
 	'{"enabled" = 1;"name" = "PDF";}' \
-	'{"enabled" = 1;"name" = "FONTS";}' \
+	'{"enabled" = 1;"name" = "CONTACT";}' \
+	'{"enabled" = 1;"name" = "MENU_EXPRESSION";}' \
+	'{"enabled" = 0;"name" = "FONTS";}' \
 	'{"enabled" = 0;"name" = "DOCUMENTS";}' \
-	'{"enabled" = 0;"name" = "MESSAGES";}' \
-	'{"enabled" = 0;"name" = "CONTACT";}' \
 	'{"enabled" = 0;"name" = "EVENT_TODO";}' \
 	'{"enabled" = 0;"name" = "IMAGES";}' \
 	'{"enabled" = 0;"name" = "BOOKMARKS";}' \
@@ -41,7 +44,6 @@ defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 0;"name" = "MENU_DEFINITION";}' \
 	'{"enabled" = 0;"name" = "MENU_OTHER";}' \
 	'{"enabled" = 0;"name" = "MENU_CONVERSION";}' \
-	'{"enabled" = 0;"name" = "MENU_EXPRESSION";}' \
 	'{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
 	'{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
 # Load new settings before rebuilding the index

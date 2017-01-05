@@ -1,10 +1,31 @@
 #!/usr/bin/env bash
 
+
+#echo $(dirname ${BASH_SOURCE})
+#echo "Bash_Source ${BASH_SOURCE[0]}"
 cd "$(dirname "${BASH_SOURCE}")";
 
 git pull origin master;
 
-function doIt() {
+function boot_repo(){
+	echo "booting repo $1"
+}
+
+function sourceFiles(){
+
+	for file in ~/{$1}/*; do
+		echo $file
+		source $file
+	done;
+	unset file;
+
+}
+
+function doIt(){
+	local doPkgs={$1}
+	local doPrefs={$2}
+	local extras={$3}
+
 	rsync --exclude ".git/" \
 		--exclude ".DS_Store" \
 		--exclude "bootstrapOSX.sh" \
@@ -27,22 +48,69 @@ function doIt() {
 		sudo pmset -a standbydelay 86400
 
 
-    for file in ~/{packages,preferences,extras}/*; do
-  		echo $file
-			source $file
-    done;
-    unset file;
+		if [ $doPkgs ]; then
+			sourceFiles "packages"
+		fi;
 
+		if [ $doPrefs ]; then
+			sourceFiles "preferences"
+		fi;
 
+		IFS=', ' read -r -a array <<< "$extras"
+		for repo in "${array[@]}"
+		do
+    	echo "$repo"
+			boot_repo $repo
+		done
 }
 
-if [ "$1" == "--force" -o "$1" == "-f" ]; then
-	doIt;
-else
+
+force=false
+prefs=true
+pkgs=true
+
+while [[ ${1} ]]; do
+	#echo $1;
+        case "${1}" in
+            --force)
+                force=true
+                shift
+                ;;
+            --f)
+                force=true
+                shift
+                ;;
+						--noprefs)
+								prefs=false
+								shift
+								;;
+						--nopkgs)
+								pkgs=false
+								shift
+								;;
+						--extras)
+								extras=${2}
+								shift
+
+								if ! shift; then
+										echo 'Missing extras parameter argument.' >&2
+										exit 1
+								fi
+								;;
+            *)
+                echo "Unknown parameter: ${1}" >&2
+                exit 1
+        esac
+    done
+
+
+if [ $force == false ]; then
 	read -p "This will overwrite some of your OSX preferences. Are you sure? (y/n) " -n 1;
 	echo "";
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		doIt;
+		doIt pkgs prefs extras;
 	fi;
+else
+		doIt pkgs prefs extras;
 fi;
 unset doIt;
