@@ -1,30 +1,29 @@
 #!/usr/bin/env bash
 
 
-#echo $(dirname ${BASH_SOURCE})
-#echo "Bash_Source ${BASH_SOURCE[0]}"
-cd "$(dirname "${BASH_SOURCE}")";
-
-git pull origin master;
 
 function boot_repo(){
-	echo "booting repo $1"
+	echo "booting repo $2 into directory $1"
+	IFS='/' read -r -a array <<< "${2}"
+	local originDir=${array[1]}
+	rm -rf ${originDir}
+	git clone git@github.com:${2}.git
+	sourceFiles $1 $originDir
 }
 
 function sourceFiles(){
-
-	for file in ~/{$1}/*; do
-		echo $file
+	for file in "${1}/${2}/*.sh"; do
+		echo "Sourcing ${file}"
 		source $file
 	done;
 	unset file;
-
 }
 
 function doIt(){
-	local doPkgs={$1}
-	local doPrefs={$2}
-	local extras={$3}
+	local dir=$1
+	local doPkgs=$2
+	local doPrefs=$3
+	local extras=$4
 
 	rsync --exclude ".git/" \
 		--exclude ".DS_Store" \
@@ -47,70 +46,97 @@ function doIt(){
 		# Set standby delay to 24 hours (default is 1 hour)
 		sudo pmset -a standbydelay 86400
 
-
-		if [ $doPkgs ]; then
-			sourceFiles "packages"
+		echo $doPkgs
+		if $doPkgs ; then
+			sourceFiles $dir "packages"
+		else
+			echo "No packages being installed."
 		fi;
 
-		if [ $doPrefs ]; then
-			sourceFiles "preferences"
+		if $doPrefs ; then
+			sourceFiles $dir "preferences"
+		else
+			echo "No preferences being installed."
 		fi;
 
-		IFS=', ' read -r -a array <<< "$extras"
+		IFS=',' read -r -a array <<< "$extras"
 		for repo in "${array[@]}"
 		do
-    	echo "$repo"
-			boot_repo $repo
+			boot_repo $dir $repo
 		done
 }
 
 
+
+#navigate through symlinks to get the directory of the script that is running
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  TARGET="$(readlink "$SOURCE")"
+  if [[ $TARGET == /* ]]; then
+    #echo "SOURCE '$SOURCE' is an absolute symlink to '$TARGET'"
+    SOURCE="$TARGET"
+  else
+    DIR="$( dirname "$SOURCE" )"
+    #echo "SOURCE '$SOURCE' is a relative symlink to '$TARGET' (relative to '$DIR')"
+    SOURCE="$DIR/$TARGET" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+  fi
+done
+RDIR="$( dirname "$SOURCE" )"
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+#if [ "$DIR" != "$RDIR" ]; then
+#  echo "DIR '$RDIR' resolves to '$DIR'"
+#fi
+
+#if we were in a symlink navigate to the resoling location
+cd "${DIR}"
+git pull origin master;
+
+# get flags from the command line
 force=false
 prefs=true
 pkgs=true
 
 while [[ ${1} ]]; do
 	#echo $1;
-        case "${1}" in
-            --force)
-                force=true
-                shift
-                ;;
-            --f)
-                force=true
-                shift
-                ;;
-						--noprefs)
-								prefs=false
-								shift
-								;;
-						--nopkgs)
-								pkgs=false
-								shift
-								;;
-						--extras)
-								extras=${2}
-								shift
+	  case "${1}" in
+	      --force)
+	          force=true
+	          shift
+	          ;;
+	      --f)
+	          force=true
+	          shift
+	          ;;
+				--noprefs)
+						prefs=false
+						shift
+						;;
+				--nopkgs)
+						pkgs=false
+						shift
+						;;
+				--extras)
+						extras=${2}
+						shift
 
-								if ! shift; then
-										echo 'Missing extras parameter argument.' >&2
-										exit 1
-								fi
-								;;
-            *)
-                echo "Unknown parameter: ${1}" >&2
-                exit 1
-        esac
-    done
-
+						if ! shift; then
+								echo 'Missing extras parameter argument.' >&2
+								exit 1
+						fi
+						;;
+	      *)
+	          echo "Unknown parameter: ${1}" >&2
+	          exit 1
+	  esac
+  done
 
 if [ $force == false ]; then
 	read -p "This will overwrite some of your OSX preferences. Are you sure? (y/n) " -n 1;
 	echo "";
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		doIt pkgs prefs extras;
+		doIt $DIR $pkgs $prefs $extras;
 	fi;
 else
-		doIt pkgs prefs extras;
+		doIt $DIR $pkgs $prefs $extras;
 fi;
 unset doIt;
