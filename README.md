@@ -28,7 +28,27 @@ source bootstrapOSX.sh
 Alternatively, to update while avoiding the confirmation prompt:
 
 ```bash
-set -- -f; source bootstrapOSX.sh
+source bootstrapOSX.sh --f
+```
+
+To install packages and avoid updating system preferences:
+
+```bash
+source bootstrapOSX.sh --noprefs
+```
+
+Or conversely, if you've already got packages installed and don't want them
+messed with, but do want some sane system preferences for software development
+
+```bash
+source bootstrapOSX.sh --nopkgs
+```
+
+And, to append additional shell scripts from your team or personal private
+repository, add the --extras argument followed by a comma delimited list of github repos.
+
+```bash
+source bootstraposx.sh --extras "jb-brown/dotfiles,PelotontechIO/CustomerBootstrap,jb-brown/PersonalBootstrap"
 ```
 
 ### Git-free install
@@ -41,14 +61,28 @@ cd; curl -#L https://github.com/PelotonTechIO/bootstrapOSX/tarball/master | tar 
 
 To update later on, just run that command again.
 
+
+### Command Line Options
+
+
 ### Add custom commands without creating a new fork
 
-If `~/.extras` exists, it will be sourced along with the other files. You can use this to add a few custom commands without the need to fork this entire repository, or to add commands you don’t want to commit to a public repository.
+To extend this code base with your personal preferences without the maintenance that might come with forking, setup a github repo (or multiple) containg your shell scripts, and simply pass the name of those repos to bootstrapOSX.sh as the value of the --extras argument. 
 
-For example your `~/.extras` could include setting :your git config --global user.email and user.name
+For example dotfiles and color themes are not usually unviersally agreed upon by a team, and forcing one set on everyone never goes over well. Instead, you might setup your own repo for your dotfiles and pass it in to the --extras argument. This allows a "core" set of package and system setup for a software team to be communally managed as code while also allowing personal variation beyond it - also managed as code.
+
+For example the following command would:
+ 
+```bash
+source bootstraposx.sh --extras "jb-brown/dotfiles,PelotontechIO/CustomerBootstrap,jb-brown/PersonalBootstrap"
+```
 
 
-You could also use `~/.extra` to override settings from the repository.
+1. Run the setup from this repo via bootstraposx.sh
+2. Then clone http://github.com/jb-brown/dotfiles and apply my dotfiles, which I can share publicly, but not everyone on my team wants to use.
+3. Followed by some cloning a private repo our tam uses to support the current Peloton customers.
+4. And finally use my own private repo that is a setup for my preferred theme, and the filesystem of my personal files like music, pictures, and books.
+
 
 ## Feedback
 
