@@ -9,6 +9,9 @@ function boot_repo(){
 	rm -rf ${originDir}
 	git clone git@github.com:${2}.git
 	sourceFiles $1 $originDir
+	#delete the dir that if we commit changes to the source code of the main
+	#repo  we aren't also checking in sub-directories of code from the 'Extras'
+	rm -rf ${originDir}
 }
 
 function sourceFiles(){
@@ -46,7 +49,6 @@ function doIt(){
 		# Set standby delay to 24 hours (default is 1 hour)
 		sudo pmset -a standbydelay 86400
 
-		echo $doPkgs
 		if $doPkgs ; then
 			sourceFiles $dir "packages"
 		else
