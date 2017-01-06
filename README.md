@@ -13,42 +13,42 @@ forgo those settings.
 
 ### Using Git and the bootstrap script
 
-You can clone the repository wherever you want. The bootstrapper script will pull in the latest version and execute them.
+You can clone the repository wherever you want. The bootstrap script will pull in the latest version and execute them.
 
 ```bash
-git clone https://github.com/PelotonTechIO/bootstrapOSX.git && cd bootstrapOSX && source bootstrapOSX.sh
+git clone https://github.com/PelotonTechIO/OSXBootstrap.git && source OSXBootstrap/bootstrap.sh
 ```
 
-To update, `cd` into your local `bootstrapOSX` repository and then:
+To update, `cd` into your local `OSXbootstrap` repository and then:
 
 ```bash
-source bootstrapOSX.sh
+source bootstrap.sh
 ```
 
 Alternatively, to update while avoiding the confirmation prompt:
 
 ```bash
-source bootstrapOSX.sh --f
+source bootstrap.sh --f
 ```
 
 To install packages and avoid updating system preferences:
 
 ```bash
-source bootstrapOSX.sh --noprefs
+source bootstrap.sh --noprefs
 ```
 
 Or conversely, if you've already got packages installed and don't want them
 messed with, but do want some sane system preferences for software development
 
 ```bash
-source bootstrapOSX.sh --nopkgs
+source bootstrap.sh --nopkgs
 ```
 
 And, to append additional shell scripts from your team or personal private
 repository, add the --extras argument followed by a comma delimited list of github repos.
 
 ```bash
-source bootstraposx.sh --extras "jb-brown/dotfiles,PelotontechIO/CustomerBootstrap,jb-brown/PersonalBootstrap"
+source bootstrap.sh --extras "jb-brown/JBDotfiles,PelotonTechIO/CodeBootstrap,jb-brown/JBBootstrap"
 ```
 
 ### Git-free install
@@ -56,7 +56,7 @@ source bootstraposx.sh --extras "jb-brown/dotfiles,PelotontechIO/CustomerBootstr
 To install these files without Git:
 
 ```bash
-cd; curl -#L https://github.com/PelotonTechIO/bootstrapOSX/tarball/master | tar -xzv --strip-components 1 --exclude={README.md,bootstrapOSX.sh,LICENSE-MIT.txt}
+cd; curl -#L https://github.com/PelotonTechIO/OSXBootstrap/tarball/master | tar -xzv --strip-components 1 --exclude={README.md,LICENSE-MIT.txt}
 ```
 
 To update later on, just run that command again.
@@ -64,21 +64,21 @@ To update later on, just run that command again.
 
 ## Add custom commands without creating a new fork
 
-To extend this code base with your personal preferences without the maintenance that might come with forking, setup a github repo (or multiple) containg your shell scripts, and simply pass the name of those repos to bootstrapOSX.sh as the value of the --extras argument. 
+To extend this code base with your personal preferences without the maintenance that might come with forking, setup a github repo (or multiple) containing your shell scripts, and simply pass the name of those repos to bootstrap.sh as the value of the --extras argument.
 
-For example dotfiles and color themes are not usually unviersally agreed upon by a team, and forcing one set on everyone never goes over well. Instead, you might setup your own repo for your dotfiles and pass it in to the --extras argument. This allows a "core" set of package and system setup for a software team to be communally managed as code while also allowing personal variation beyond it - also managed as code.
+For example dotfiles and color themes are not usually universally agreed upon by a team, and forcing one set on everyone never goes over well. Instead, you might setup your own repo for your dotfiles and pass it in to the --extras argument. This allows a "core" set of package and system setup for a software team to be communally managed as code while also allowing personal variation beyond it - also managed as code.
 
 For example the following command would:
- 
+
 ```bash
-source bootstraposx.sh --extras "jb-brown/dotfiles,PelotontechIO/CustomerBootstrap,jb-brown/PersonalBootstrap"
+source bootstrap.sh --extras "jb-brown/JBDotfiles,PelotonTechIO/CodeBootstrap,jb-brown/JBBootstrap"
 ```
 
 
-1. Run the setup from this repo via bootstraposx.sh
-2. Then clone <http://github.com/jb-brown/dotfiles> and apply my dotfiles, which I can share publicly, but not everyone on my team wants to use.
-3. Followed by some cloning a private repo our tam uses to support the current Peloton customers.
-4. And finally use my own private repo that is a setup for my preferred theme, and the filesystem of my personal files like music, pictures, and books.
+1. Run the setup from this repo via bootstrap.sh
+2. Then clone <http://github.com/jb-brown/JBDotfiles> and apply my dotfiles, which I can share publicly, but not everyone on my team wants to use.
+3. Followed by some cloning a private repo our team uses to support the current Peloton customers.
+4. And finally use my own private repo to setup my filesystem of personal stuff like music, pictures, and books.
 
 
 ## Feedback
