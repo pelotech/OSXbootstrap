@@ -6,8 +6,8 @@
 
 
 # Set Code directory as the default location for new Finder windows
-if [ ! -d "${HOME}/Code/" ]; then
-	mkdir "${HOME}/Code/"
+if [ ! -d "${HOME}/Code" ]; then
+	mkdir "${HOME}/Code"
 fi
 
 # For Desktop use "PfDe" and "file://${HOME}/Desktop/"
