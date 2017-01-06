@@ -1,57 +1,69 @@
 #!/usr/bin/env bash
 
+function clone_repo(){
+	local home=$1
+	local gitName=$2
 
+	#split the github path into it's user and repo parts
+	IFS='/' read -r -a array <<< "${gitName}"
+	local gitUser=${array[0]}
+	local gitRepo=${array[1]}
 
-function boot_repo(){
-	echo "booting repo $2 into directory $1"
-	IFS='/' read -r -a array <<< "${2}"
-	local originDir=${array[1]}
-	rm -rf ${originDir}
-	git clone git@github.com:${2}.git
-	sourceFiles $1 $originDir
-	#delete the dir that if we commit changes to the source code of the main
-	#repo  we aren't also checking in sub-directories of code from the 'Extras'
-  cd $1
-	#rm -rf ${originDir}
+	#clear existing work and re-create folder structure
+	rm -rf "$home/$gitUser/$gitRepo"
+	mkdir -p "$home/$gitUser"
+
+	#get a fresh copy
+	git clone git@github.com:${gitName}.git -p "$home/$gitUser"
+
+	#return the location of the repo
+	return "$home/$gitUser/$gitRepo"
 }
 
-function sourceFiles(){
-	echo "${1}/${2}/*.sh"
-	for file in "${1}/${2}"/*.sh; do
+function source_files(){
+	echo "${1}/*.sh"
+	for file in "${1}"/*.sh; do
 		echo "Sourcing ${file}"
 		source $file
 	done;
 	unset file;
 }
 
+function silence_terminal(){
+		# Close any open System Preferences panes, to prevent them from overriding
+		# settings we’re about to change
+		osascript -e 'tell application "System Preferences" to quit'
+
+		# Ask for the administrator password upfront
+		sudo -v
+
+		# Keep-alive: update existing `sudo` time stamp until `faster_osx.sh` has finished
+		while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+		# Set standby delay to 24 hours (default is 1 hour)
+		sudo pmset -a standbydelay 86400
+}
+
+
 function doIt(){
-	local dir=$1
-	local doPkgs=$2
-	local doPrefs=$3
-	local extras=$4
+	local doPkgs=$1
+	local doPrefs=$2
+	local extras=$3
 
+	silence_terminal
 
-	# Close any open System Preferences panes, to prevent them from overriding
-	# settings we’re about to change
-	osascript -e 'tell application "System Preferences" to quit'
-
-	# Ask for the administrator password upfront
-	sudo -v
-
-	# Keep-alive: update existing `sudo` time stamp until `faster_osx.sh` has finished
-	while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-
-	# Set standby delay to 24 hours (default is 1 hour)
-	sudo pmset -a standbydelay 86400
+	local home="$HOME\Code"
+	mkdir -p $home
+	local gitDir=clone_repo $home "PelotonTechIO\bootstrapOSX"
 
 	if $doPkgs ; then
-		sourceFiles $dir "packages"
+		sourceFiles "${gitDir}/packages"
 	else
 		echo "No packages being installed."
 	fi;
 
 	if $doPrefs ; then
-		sourceFiles $dir "preferences"
+		sourceFiles "${gitDir}/preferences"
 	else
 		echo "No preferences being installed."
 	fi;
@@ -59,34 +71,13 @@ function doIt(){
 	IFS=',' read -r -a array <<< "$extras"
 	for repo in "${array[@]}"
 	do
-		boot_repo $dir $repo
+		gitDir=clone_repo $home $repo
+		source_files $gitDir
 	done
 }
 
 
 
-#navigate through symlinks to get the directory of the script that is running
-SOURCE="${BASH_SOURCE[0]}"
-while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
-  TARGET="$(readlink "$SOURCE")"
-  if [[ $TARGET == /* ]]; then
-    #echo "SOURCE '$SOURCE' is an absolute symlink to '$TARGET'"
-    SOURCE="$TARGET"
-  else
-    DIR="$( dirname "$SOURCE" )"
-    #echo "SOURCE '$SOURCE' is a relative symlink to '$TARGET' (relative to '$DIR')"
-    SOURCE="$DIR/$TARGET" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
-  fi
-done
-RDIR="$( dirname "$SOURCE" )"
-DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-#if [ "$DIR" != "$RDIR" ]; then
-#  echo "DIR '$RDIR' resolves to '$DIR'"
-#fi
-
-#if we were in a symlink navigate to the resoling location
-cd "${DIR}"
-#git pull origin master;
 
 # get flags from the command line
 force=false
@@ -118,12 +109,12 @@ while [[ ${1} ]]; do
 
 						if ! shift; then
 								echo 'Missing extras parameter argument.' >&2
-								exit 1
+								exit 0
 						fi
 						;;
 	      *)
 	          echo "Unknown parameter: ${1}" >&2
-	          exit 1
+	          exit 0
 	  esac
   done
 
@@ -131,11 +122,12 @@ if [ $force == false ]; then
 	read -p "This will overwrite some of your OSX preferences. Are you sure? (y/n) " -n 1;
 	echo "";
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		doIt $DIR $pkgs $prefs $extras;
+		doIt $pkgs $prefs $extras;
 	fi;
 else
-		doIt $DIR $pkgs $prefs $extras;
+		doIt $pkgs $prefs $extras;
 fi;
+
 unset doIt;
 unset prefs;
 unset pkgs;
