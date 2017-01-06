@@ -52,7 +52,7 @@ function doIt(){
 
 	silence_terminal
 
-	local home="$HOME\Code"
+	local home="$HOME/Code"
 	mkdir -p $home
 	local gitDir=clone_repo $home "PelotonTechIO\bootstrapOSX"
 
