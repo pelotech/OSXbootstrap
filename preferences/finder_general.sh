@@ -7,13 +7,13 @@
 
 # Set Code directory as the default location for new Finder windows
 if [ ! -d "${HOME}/Code" ]; then
-	mkdir "${HOME}/Code"
+	mkdir -p "${HOME}/Code"
 fi
 
 # For Desktop use "PfDe" and "file://${HOME}/Desktop/"
 # For other paths, use `PfLo` and `file:///full/path/here/`
 defaults write com.apple.finder NewWindowTarget -string "PfLo"
-defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Code/"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Code"
 
 # When performing a search, search the current folder by default
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
