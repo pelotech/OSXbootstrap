@@ -12,7 +12,7 @@ function boot_repo(){
 	#delete the dir that if we commit changes to the source code of the main
 	#repo  we aren't also checking in sub-directories of code from the 'Extras'
   cd $1
-	rm -rf ${originDir}
+	#rm -rf ${originDir}
 }
 
 function sourceFiles(){
@@ -85,7 +85,7 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #fi
 
 #if we were in a symlink navigate to the resoling location
-#cd "${DIR}"
+cd "${DIR}"
 #git pull origin master;
 
 # get flags from the command line
