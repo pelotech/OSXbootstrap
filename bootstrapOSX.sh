@@ -11,6 +11,7 @@ function boot_repo(){
 	sourceFiles $1 $originDir
 	#delete the dir that if we commit changes to the source code of the main
 	#repo  we aren't also checking in sub-directories of code from the 'Extras'
+  cd $1
 	rm -rf ${originDir}
 }
 
