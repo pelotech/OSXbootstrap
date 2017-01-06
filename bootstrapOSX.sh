@@ -52,18 +52,18 @@ function doIt(){
 
 	silence_terminal
 
-	local home="$HOME/Code"
+	local home="$HOME\Code"
 	mkdir -p $home
 	local gitDir=clone_repo $home "PelotonTechIO\bootstrapOSX"
 
 	if $doPkgs ; then
-		sourceFiles "${gitDir}/packages"
+		sourceFiles "${gitDir}\packages"
 	else
 		echo "No packages being installed."
 	fi;
 
 	if $doPrefs ; then
-		sourceFiles "${gitDir}/preferences"
+		sourceFiles "${gitDir}\preferences"
 	else
 		echo "No preferences being installed."
 	fi;
