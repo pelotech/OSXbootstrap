@@ -107,13 +107,13 @@ function bootstrap(){
 	local gitDir=$(clone_repo $codeDir "PelotonTechIO/bootstrapOSX")
 
 	if $doPkgs ; then
-		sourceFiles "${gitDir}/packages"
+		source_files "${gitDir}/packages"
 	else
 		echo "No packages being installed."
 	fi;
 
 	if $doPrefs ; then
-		sourceFiles "${gitDir}/preferences"
+		source_files "${gitDir}/preferences"
 	else
 		echo "No preferences being installed."
 	fi;
