@@ -1,27 +1,33 @@
 #!/usr/bin/env bash
 
+################################################################################
+# Clone a git hub repo to a clean location following the tree structure of     #
+#
+# $HOME
+#   -- Code
+#        -- [github org/user name]
+#            -- [github repo name]
+################################################################################
 function clone_repo(){
-	local home=$1
+
+	local codeDir=$1
 	local gitName=$2
 
-	#split the github path into it's user and repo parts
-	IFS='/' read -r -a array <<< "${gitName}"
-	local gitUser=${array[0]}
-	local gitRepo=${array[1]}
-
 	#clear existing work and re-create folder structure
-	rm -rf "$home/$gitUser/$gitRepo"
-	mkdir -p "$home/$gitUser"
+	rm -rf "$codeDir/$gitName"
+	mkdir -p "$codeDir/$gitName"
 
 	#get a fresh copy
-	git clone git@github.com:${gitName}.git -p "$home/$gitUser"
+	git clone git@github.com:${gitName}.git "$codeDir/$gitName"
 
 	#return the location of the repo
-	return "$home/$gitUser/$gitRepo"
+	echo "$codeDir/$gitName"
 }
 
+################################################################################
+# Execute .sh files within a directory                                         #
+################################################################################
 function source_files(){
-	echo "${1}/*.sh"
 	for file in "${1}"/*.sh; do
 		echo "Sourcing ${file}"
 		source $file
@@ -29,6 +35,10 @@ function source_files(){
 	unset file;
 }
 
+
+################################################################################
+# Remove roadblocks for unattended execution                                   #
+################################################################################
 function silence_terminal(){
 		# Close any open System Preferences panes, to prevent them from overriding
 		# settings we’re about to change
@@ -44,26 +54,28 @@ function silence_terminal(){
 		sudo pmset -a standbydelay 86400
 }
 
-
-function doIt(){
+################################################################################
+# Bootstrap OSX with sane defaults for software development                    #
+################################################################################
+function bootstrap(){
 	local doPkgs=$1
 	local doPrefs=$2
 	local extras=$3
 
 	silence_terminal
 
-	local home="$HOME\Code"
-	mkdir -p $home
-	local gitDir=clone_repo $home "PelotonTechIO\bootstrapOSX"
+	local codeDir="$HOME/Code"
+	mkdir -p $codeDir
+	local gitDir=$(clone_repo $codeDir "PelotonTechIO/bootstrapOSX")
 
 	if $doPkgs ; then
-		sourceFiles "${gitDir}\packages"
+		sourceFiles "${gitDir}/packages"
 	else
 		echo "No packages being installed."
 	fi;
 
 	if $doPrefs ; then
-		sourceFiles "${gitDir}\preferences"
+		sourceFiles "${gitDir}/preferences"
 	else
 		echo "No preferences being installed."
 	fi;
@@ -71,64 +83,73 @@ function doIt(){
 	IFS=',' read -r -a array <<< "$extras"
 	for repo in "${array[@]}"
 	do
-		gitDir=clone_repo $home $repo
-		source_files $gitDir
+		source_files $(clone_repo $codeDir $repo)
 	done
 }
 
 
-
-
-# get flags from the command line
+################################################################################
+# Parse command line and set exectuion flags
+################################################################################
 force=false
 prefs=true
 pkgs=true
 
 while [[ ${1} ]]; do
-	#echo $1;
-	  case "${1}" in
-	      --force)
-	          force=true
-	          shift
-	          ;;
-	      --f)
-	          force=true
-	          shift
-	          ;;
-				--noprefs)
-						prefs=false
-						shift
-						;;
-				--nopkgs)
-						pkgs=false
-						shift
-						;;
-				--extras)
-						extras=${2}
-						shift
+  case "${1}" in
+      --force)
+          force=true
+          shift
+          ;;
+      --f)
+          force=true
+          shift
+          ;;
+			--noprefs)
+					prefs=false
+					shift
+					;;
+			--nopkgs)
+					pkgs=false
+					shift
+					;;
+			--extras)
+					extras=${2}
+					shift
 
-						if ! shift; then
-								echo 'Missing extras parameter argument.' >&2
-								exit 0
-						fi
-						;;
-	      *)
-	          echo "Unknown parameter: ${1}" >&2
-	          exit 0
-	  esac
-  done
+					if ! shift; then
+							echo 'Missing extras parameter argument.' >&2
+							exit 0
+					fi
+					;;
+      *)
+          echo "Unknown parameter: ${1}" >&2
+          exit 0
+  esac
+done
+
+
+################################################################################
+# Inovke Execution                                                             #
+################################################################################
+
+#execution changes the path, so store the starting point to go back at the end
+startingPWD=$pwd
 
 if [ $force == false ]; then
 	read -p "This will overwrite some of your OSX preferences. Are you sure? (y/n) " -n 1;
 	echo "";
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		doIt $pkgs $prefs $extras;
+		bootstrap $pkgs $prefs $extras;
 	fi;
 else
-		doIt $pkgs $prefs $extras;
+		bootstrap $pkgs $prefs $extras;
 fi;
 
-unset doIt;
+#return to the starting path
+cd $startingPWD
+
+unset bootstrap;
 unset prefs;
 unset pkgs;
 unset extras;
