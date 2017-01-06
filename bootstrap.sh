@@ -1,5 +1,42 @@
 #!/usr/bin/env bash
 
+
+
+################################################################################
+# Create an SSH key for GitHub
+################################################################################
+function create_github_ssh(){
+	#Check if github SSH needs to be setup
+	pbcopy < ~/.ssh/id_rsa.pub
+	if [ $? -eq 1 ]
+	then
+		read -p "SSH paraphrase for github rsa key: " paraphrase
+		echo -e  'y\n'|ssh-keygen -q -t rsa -b 4096 -N "$paraphrase" -f ~/.ssh/id_rsa
+		eval "$(ssh-agent -s)"
+		ssh-add ~/.ssh/id_rsa
+		pbcopy < ~/.ssh/id_rsa.pub
+
+		# directions of what to do on GitHub.com
+		echo ""
+		echo "-------------------------------------------------------------------------------"
+		echo ""
+		echo "Your public key has been copied to the clipboard. Next a browser will navigate"
+		echo "to your github SSH Key Settings page. There may be a login gate first."
+		echo "Create a 'New SSH key' with the contents of the clipboard when you get there."
+		echo ""
+		echo "-------------------------------------------------------------------------------"
+		echo ""
+		read -n 1 -s -p "Press any key to open GitHub SSH Key Settings"
+		echo ""
+		echo ""
+		open "https://github.com/settings/keys"
+		echo ""
+		echo ""
+		read -n 1 -s -p "SSH Key created on GitHub? Press any key to continue"
+	fi
+}
+
+
 ################################################################################
 # Clone a git hub repo to a clean location following the tree structure of     #
 #
@@ -39,7 +76,7 @@ function source_files(){
 ################################################################################
 # Remove roadblocks for unattended execution                                   #
 ################################################################################
-function silence_terminal(){
+function silence_sudo_approval(){
 		# Close any open System Preferences panes, to prevent them from overriding
 		# settings we’re about to change
 		osascript -e 'tell application "System Preferences" to quit'
@@ -62,7 +99,8 @@ function bootstrap(){
 	local doPrefs=$2
 	local extras=$3
 
-	silence_terminal
+	silence_sudo_approval
+	create_github_ssh
 
 	local codeDir="$HOME/Code"
 	mkdir -p $codeDir
