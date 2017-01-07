@@ -6,13 +6,8 @@ OSX ships with defaults appropriate for general consumers - not software develop
 Siri isn't a good pair programming partner, Notification Center is a source of distraction, the bootup and phone ringing sounds are jarring when working in a shared space, guest accounts are a security issue, spotlight indexes and searches fonts, movies, and spreadsheets. 
 
 
-This project changes all those things and more - so that your mac has sane defaults for software development teams. Quickly, easily, repeatably - without overdoing forced standardization.
-
-
-The project has been arranged into small file chunks
-to allow individual team members to quickly identify the changes they want to make, or delete whole files to forgo those settings.
-
-Additionally, it's designed for personalization through extension by chaining on a list of other github repos to clone and execute in [your personal gist script] (https://gist.github.com/jb-brown/26735fe889809312bfaa42e4c1d613ba) for bootstrapping your setup.
+**This project changes all those things and more** - so that your mac has sane defaults for software development teams. Quickly, easily, repeatably - without overdoing forced standardization. The project is arranged into small file chunks
+to allow individual team members to quickly identify the changes they want to make, or delete whole files to forgo those settings. Additionally, it's designed for personalization through extension by chaining on a list of other github repos to clone and execute in [your personal gist script] (https://gist.github.com/jb-brown/26735fe889809312bfaa42e4c1d613ba) for bootstrapping your setup.
 
 
 ## Installation
