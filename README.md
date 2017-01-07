@@ -1,15 +1,25 @@
 
 # Faster, better OSX for Team Software Development
 
-This project is inspired and seeded by the code at https://github.com/mathiasbynens/dotfiles. It has been stripped
-down and re-arranged to focus on team software development instead of hacking. Accordingly themes have been relegated
-to being an 'extras' addition (see more below). And, the project has been re-arranged into  smaller file chunks
-to allow individual team members to quickly identify the changes they want to make, or delete whole files to
-forgo those settings.
+OSX ships with defaults appropriate for general consumers - not software developers.  
+
+Siri isn't a good pair programming partner, Notification Center is a source of distraction, the bootup and phone ringing sounds are jarring when working in a shared space, guest accounts are a security issue, spotlight indexes and searches fonts, movies, and spreadsheets. 
+
+
+This project changes all those things and more - so that your mac has sane defaults for software development teams. Quickly, easily, repeatably - without overdoing forced standardization.
+
+
+The project has been arranged into small file chunks
+to allow individual team members to quickly identify the changes they want to make, or delete whole files to forgo those settings.
+
+Additionally, it's designed for personalization through extension by chaining on a list of other github repos to clone and execute in [your personal gist script] (https://gist.github.com/jb-brown/26735fe889809312bfaa42e4c1d613ba) for bootstrapping your setup.
+
 
 ## Installation
 
-**Warning:** If you want to give these OSX settings a try, you should first fork this repository, review the code, and remove things you don’t want or need. Don’t blindly use these settings unless you know what that entails. Use at your own risk!
+**Warning:** If you want to give these OSX settings a try, you should first fork this repository, review the code, and remove things you don’t want or need. Don’t blindly use these settings unless you know what that entails. 
+
+**Use at your own risk!**
 
 ### Using Git and the bootstrap script
 
@@ -51,20 +61,9 @@ repository, add the --extras argument followed by a comma delimited list of gith
 source bootstrap.sh --extras "jb-brown/JBDotfiles,PelotonTechIO/CodeBootstrap,jb-brown/JBBootstrap"
 ```
 
-### Git-free install
-
-To install these files without Git:
-
-```bash
-cd; curl -#L https://github.com/PelotonTechIO/OSXBootstrap/tarball/master | tar -xzv --strip-components 1 --exclude={README.md,LICENSE-MIT.txt}
-```
-
-To update later on, just run that command again.
-
-
 ## Add custom commands without creating a new fork
 
-To extend this code base with your personal preferences without the maintenance that might come with forking, setup a github repo (or multiple) containing your shell scripts, and simply pass the name of those repos to bootstrap.sh as the value of the --extras argument.
+To extend this code base with your personal preferences without the merge maintenance that might come with forking, setup a github repo (or multiple) containing your shell scripts. Then simply pass the name of those repos to bootstrap.sh as the value of the --extras argument.
 
 For example dotfiles and color themes are not usually universally agreed upon by a team, and forcing one set on everyone never goes over well. Instead, you might setup your own repo for your dotfiles and pass it in to the --extras argument. This allows a "core" set of package and system setup for a software team to be communally managed as code while also allowing personal variation beyond it - also managed as code.
 
@@ -89,3 +88,6 @@ Suggestions/improvements
 
 ## Thanks to…
 * Mathias Bynens and everyone he thanks on his great work at https://github.com/mathiasbynens/dotfiles
+
+This project is inspired and seeded by Mathias's  code. It has been stripped down and re-arranged to focus on team software development instead of hacking and related contests. Accordingly themes have been relegated to being an 'extras' addition (see more below). And, the project has been re-arranged into smaller file chunks to allow individual team members to quickly identify the changes they want to make, or delete whole files to forgo those settings.
+

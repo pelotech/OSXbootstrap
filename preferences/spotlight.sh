@@ -31,8 +31,8 @@ defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 1;"name" = "PDF";}' \
 	'{"enabled" = 1;"name" = "CONTACT";}' \
 	'{"enabled" = 1;"name" = "MENU_EXPRESSION";}' \
+	'{"enabled" = 1;"name" = "DOCUMENTS";}' \
 	'{"enabled" = 0;"name" = "FONTS";}' \
-	'{"enabled" = 0;"name" = "DOCUMENTS";}' \
 	'{"enabled" = 0;"name" = "EVENT_TODO";}' \
 	'{"enabled" = 0;"name" = "IMAGES";}' \
 	'{"enabled" = 0;"name" = "BOOKMARKS";}' \
