@@ -4,20 +4,44 @@
 # Homebrew packages that have no aditional configuration                      #
 ###############################################################################
 
+doUpdate=false;
 
-#essentials that have homebrew packages
-brew cask install insync          #mount & sync multiple google drive accounts
-brew cask install google-drive
-brew cask install slack
-brew cask install zoomus          #video conference
+#Install packages if they aren't already
+declare -a pkgs=(	git
+									node
+									wget
+								)
+
+for pkg in "${pkgs[@]}"; do
+    if brew list -1 | grep -q "^${pkg}\$"; then
+			doUpdate=true;
+		else
+			brew install $pkg
+    fi
+done
 
 
-brew install node
-brew install wget
-brew cask install caffeine        #keep mac awake
-brew cask install dropbox
-brew cask install screenhero      #remote pair programming
-brew cask install skype
-brew cask install macdown         #mark down editor
-brew cask install intellij-idea   #java ide
-#brew cask install microsoft-office
+#Install casks if they aren't already
+declare -a casks=(	insync				#mount & sync multiple google drive accounts
+										google-drive
+										slack
+										zoomus				#video conference
+										caffeine
+										dropbox
+										screenhero		#remote pair programming
+										macdown				#mark down editor
+										intellij-idea #java ide
+									)
+
+for cask in "${casks[@]}"; do
+    if brew cask list -1 | grep -q "^${cask}\$"; then
+			doUpdate=true;
+		else
+			brew cask install $cask
+    fi
+done
+
+#Update any of the packages or casks that were previously installed
+if [ doUpdate ]; then
+	brew update
+fi

@@ -1,6 +1,26 @@
 #!/usr/bin/env bash
 
 
+################################################################################
+# Install homebrew and git if they dont' exist
+################################################################################
+function install_package_managers(){
+	#install or update homebrew
+	which -s brew
+	if [[ $? != 0 ]] ; then
+	    # Install Homebrew
+			/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" </dev/null
+	else
+	    brew update
+	fi
+
+	#install or update git
+	if brew list -1 | grep -q "^git\$"; then
+		brew update git
+	else
+		brew install git
+	fi
+}
 
 ################################################################################
 # Create an SSH key for GitHub
@@ -100,6 +120,7 @@ function bootstrap(){
 	local extras=$3
 
 	silence_sudo_approval
+	install_package_managers
 	create_github_ssh
 
 	local codeDir="$HOME/Code"

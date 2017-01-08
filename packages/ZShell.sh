@@ -5,9 +5,19 @@
 ###############################################################################
 
 #Install and configure zsh & completions
-brew install zsh
-brew install zsh-completions
-touch ~/.zshrc
-echo "fpath=(/usr/local/share/zsh-completions $fpath)" >> ~/.zshrc
-rm -f ~/.zcompdump; compinit
-chmod go-w '/usr/local/share'
+
+if brew list -1 | grep -q "^zsh\$"; then
+	brew update zsh
+else
+	brew install zsh
+fi
+
+if brew list -1 | grep -q "^zsh-completions\$"; then
+	brew update zsh-completions
+else
+	brew install zsh-completions
+	touch ~/.zshrc
+	echo "fpath=(/usr/local/share/zsh-completions $fpath)" >> ~/.zshrc
+	rm -f ~/.zcompdump; compinit
+	chmod go-w '/usr/local/share'
+fi

@@ -6,8 +6,9 @@
 
 # Finder: disable window animations and Get Info animations
 defaults write com.apple.finder DisableAllAnimations -bool true
+
 # Finder: show hidden files by default
-#defaults write com.apple.finder AppleShowAllFiles -bool true
+defaults write com.apple.finder AppleShowAllFiles -bool true
 
 # Finder: show all filename extensions
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
@@ -17,6 +18,9 @@ defaults write com.apple.finder ShowStatusBar -bool true
 
 # Finder: show path bar
 defaults write com.apple.finder ShowPathbar -bool true
+
+# Finder: show tab bar / view
+defaults write com.apple.finder ShowTabview -bool true
 
 # Display full POSIX path as Finder window title
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true

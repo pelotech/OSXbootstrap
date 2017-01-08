@@ -4,10 +4,16 @@
 # Atom                     #
 ###############################################################################
 
+
+#install or update atom
+if brew cask list -1 | grep -q "^atom\$"; then
+	brew cask update atom
+else
+	brew cask install atom
+fi
+
 killall Atom
 
-#Atom and it's packages
-brew cask install atom            #code editor
 #JS/React packages
 apm install atom-beautify
 apm install autocomplete-modules
