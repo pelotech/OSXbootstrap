@@ -16,6 +16,10 @@ defaults write com.apple.Siri Disabled -bool true
 
 #If you reboot and Siri is still enabled follow these steps
 
+	#Remove Siri from the touchbar
+#Go to System Preferences => Keyboard => Customize Control Strip.
+#Move the pointer below the screen to where siri is, drag it up and out of the touchbar.
+
 # from -http://apple.stackexchange.com/questions/258816/how-to-completely-disable-siri-on-sierra
 # * Reboot in Recovery mode by restarting your Mac and holding Command+R. It can take more time to boot as usual, that's OK, just be patient.
 # * In top menu go to Utilities and open Terminal.

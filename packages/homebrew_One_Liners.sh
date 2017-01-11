@@ -4,7 +4,7 @@
 # Homebrew packages that have no aditional configuration                      #
 ###############################################################################
 
-doUpdate=false;
+doUpgrade=false;
 
 #Install packages if they aren't already
 declare -a pkgs=(	git
@@ -14,7 +14,7 @@ declare -a pkgs=(	git
 
 for pkg in "${pkgs[@]}"; do
     if brew list -1 | grep -q "^${pkg}\$"; then
-			doUpdate=true;
+			doUpgrade=true;
 		else
 			brew install $pkg
     fi
@@ -28,6 +28,8 @@ declare -a casks=(	insync				#mount & sync multiple google drive accounts
 										zoomus				#video conference
 										caffeine
 										dropbox
+										1password
+										lastpass
 										screenhero		#remote pair programming
 										macdown				#mark down editor
 										intellij-idea #java ide
@@ -35,13 +37,13 @@ declare -a casks=(	insync				#mount & sync multiple google drive accounts
 
 for cask in "${casks[@]}"; do
     if brew cask list -1 | grep -q "^${cask}\$"; then
-			doUpdate=true;
+			doUpgrade=true;
 		else
 			brew cask install $cask
     fi
 done
 
 #Update any of the packages or casks that were previously installed
-if [ doUpdate ]; then
-	brew update
+if [ doUpgrade ]; then
+	brew upgrade
 fi
