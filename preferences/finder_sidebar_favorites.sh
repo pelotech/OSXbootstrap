@@ -25,6 +25,9 @@ defaults write  com.apple.finder SidebarSharedSectionDisclosedState -int 0
 defaults write  com.apple.finder SidebarShowingiCloudDesktop -int 1
 defaults write  com.apple.finder SidebarSharedSectioniCloudDisclosedState -int 0
 
+#hide Media
+defaults write  com.apple.finder SidebarMediaBrowserSectionDisclosedState -int 0
+
 #hide Tags
 defaults write  com.apple.finder SidebarTagsSctionDisclosedState -int 0
 
