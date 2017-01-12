@@ -9,6 +9,7 @@ then
 	/usr/local/bin/mysides remove Applications file:///Applications/ && sleep 2
 	/usr/local/bin/mysides remove Documents file:///Users/$loggedInUser/Documents/ && sleep 2
 	/usr/local/bin/mysides remove Downloads file:///Users/$loggedInUser/Downloads/ && sleep 2
+	/usr/local/bin/mysides remove Dropbox file:///Users/$loggedInUser/Dropbox/ && sleep 2
 
 
 fi
