@@ -30,8 +30,9 @@ function create_github_ssh(){
 	pbcopy < ~/.ssh/id_rsa.pub
 	if [ $? -eq 1 ]
 	then
-		read -p "SSH paraphrase for github rsa key: " paraphrase
-		echo -e  'y\n'|ssh-keygen -q -t rsa -b 4096 -N "$paraphrase" -f ~/.ssh/id_rsa
+
+		#use an empty paraphrase to silently create an key pair
+		echo -e  'y\n'|ssh-keygen -q -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
 		eval "$(ssh-agent -s)"
 		ssh-add ~/.ssh/id_rsa
 		pbcopy < ~/.ssh/id_rsa.pub
