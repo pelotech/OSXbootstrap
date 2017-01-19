@@ -16,7 +16,7 @@ function install_package_managers(){
 
 	#install or update git
 	if brew list -1 | grep -q "^git\$"; then
-		brew update git
+		brew upgrade git
 	else
 		brew install git
 	fi
