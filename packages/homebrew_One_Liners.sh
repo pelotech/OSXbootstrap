@@ -26,6 +26,8 @@ declare -a casks=(	insync				#mount & sync multiple google drive accounts
 										google-drive
 										slack
 										zoomus				#video conference
+										skype
+										twitterrific
 										caffeine
 										dropbox
 										1password
@@ -33,6 +35,7 @@ declare -a casks=(	insync				#mount & sync multiple google drive accounts
 										screenhero		#remote pair programming
 										macdown				#mark down editor
 										intellij-idea #java ide
+
 									)
 
 for cask in "${casks[@]}"; do

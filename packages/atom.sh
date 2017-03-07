@@ -30,3 +30,4 @@ apm install set-syntax
 apm install sort-lines
 apm install sublime-block-comment
 apm install sublime-style-column-selection
+apm install goto-definition
