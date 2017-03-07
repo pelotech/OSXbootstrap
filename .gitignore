@@ -1,0 +1,5 @@
+# OS-X .DS_Store system file.
+.DS_Store
+
+# IntelliJ & related Jetbrains .idea settings directory.
+.idea
