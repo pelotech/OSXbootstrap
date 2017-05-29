@@ -10,6 +10,7 @@ doUpgrade=false;
 declare -a pkgs=(	git
 									node
 									wget
+									terraform
 								)
 
 for pkg in "${pkgs[@]}"; do

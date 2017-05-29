@@ -16,7 +16,7 @@ fi
 
 
 
-#devices
+#hide the devices section
 defaults write  com.apple.finder SidebarDevicesSectionDisclosedState -int 0
 
 #hide the shared section
@@ -45,6 +45,9 @@ defaults write  com.apple.finder SidebarPlacesSectionDisclosedState -int 1
 
 #Desktop
 /usr/bin/sfltool add-item com.apple.LSSharedFileList.FavoriteItems file:///Users/$loggedInUser/Desktop && sleep 2
+
+#Applications
+/usr/bin/sfltool add-item com.apple.LSSharedFileList.FavoriteItems file:///Applications && sleep 2
 
 
 #ROOT
